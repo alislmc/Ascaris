@@ -17,6 +17,7 @@ With a load of Software Robot. It stores it in encrypted form To run in the next
 
 <i>To protect the token, the robot stores the software encrypted so that other users do not have access to it</i>
 </br></br>
+<b>[Download Binary File](https://github.com/alcott1331/Ascaris/releases/download/v3.0/Ascaris.jar)</b>
 
 **Screenshot of The Main Window**</br>
 <img src="Screenshot.png" /></br></br>
