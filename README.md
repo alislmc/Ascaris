@@ -12,4 +12,11 @@ In this way, by entering your robot token in the input field of the software, yo
 - And More ...
 
 **Screenshot of The Main Window**</br>
-<img src="Screenshot.png" /></br>
+<img src="Screenshot.png" /></br></br>
+
+**Keyboard Markup Section**</br>
+<img src="Screenshot1.png"/></br></br>
+
+
+**Help Menu**</br>
+<img src="Screenshot2.png"/></br></br>
