@@ -11,6 +11,10 @@ In this way, by entering your robot token in the input field of the software, yo
 - Get List Of File And Folder
 - And More ...
 
+</br></br>
+<i>To protect the token, the robot stores the software encrypted so that other users do not have access to it</i>
+</br></br>
+
 **Screenshot of The Main Window**</br>
 <img src="Screenshot.png" /></br></br>
 
