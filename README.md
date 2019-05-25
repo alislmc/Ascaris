@@ -10,3 +10,6 @@ In this way, by entering your robot token in the input field of the software, yo
 - Move , Copy 
 - Get List Of File And Folder
 - And More ...
+
+**Screenshot of The Main Window**</br>
+<img src="Screenshot.png" /></br>
