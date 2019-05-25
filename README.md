@@ -11,7 +11,10 @@ In this way, by entering your robot token in the input field of the software, yo
 - Get List Of File And Folder
 - And More ...
 
+With a load of Software Robot. It stores it in encrypted form To run in the next run without displaying the main window and retrieving the token
+
 </br></br>
+
 <i>To protect the token, the robot stores the software encrypted so that other users do not have access to it</i>
 </br></br>
 
