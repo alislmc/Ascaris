@@ -9,4 +9,4 @@ In this way, by entering your robot token in the input field of the software, yo
 - Delete File And Folder
 - Move , Copy 
 - Get List Of File And Folder
-- And More ..
+- And More ...
