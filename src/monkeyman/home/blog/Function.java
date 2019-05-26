@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Locale;
 
 
 public class Function {
@@ -55,7 +56,7 @@ public class Function {
         ReplyKeyboardMarkup markup = new ReplyKeyboardMarkup();
         markup.setKeyboard(list);
         WorkFlow.bot.execute(new SendMessage(update.getMessage().getChatId(),StaticString.BotStatic.Messages.see_below_panel)
-        .setReplyMarkup(markup));
+                .setReplyMarkup(markup));
     }
 
 
@@ -99,15 +100,18 @@ public class Function {
             WorkFlow.bot.execute(new SendMessage(update.getMessage().getChatId(), ex.getMessage().toString()));
         }
     }
-//---------------------------------------------------------------------------------------------------
+    //---------------------------------------------------------------------------------------------------
     public static void CommandScript(Update update) throws TelegramApiException {
         try {
-            String command = update.getMessage().getText().split(":")[1];
-            ProcessBuilder builder = new ProcessBuilder(ArgSplit(command));
+            String command = update.getMessage().getText();
+            command = command.substring(4,command.length());
+            System.out.println("CMD:>> "+command);
 
 
-            builder.redirectErrorStream(true);
-            Process process = builder.start();
+            if (System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH).indexOf("win")==0)
+                command = "cmd.exe /c "+command;
+
+            Process process = Runtime.getRuntime().exec(command);
             InputStream is = process.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 
@@ -117,6 +121,7 @@ public class Function {
                 str.append(line+"\r\n");
             }
 
+            System.out.println( str.toString());
             Function.SendTextMessage(update, str.toString());
 
         } catch (IOException e) {
@@ -125,37 +130,9 @@ public class Function {
         }
     }
 
-    private static ArrayList<String> ArgSplit(String str){
-        ArrayList<String> list = new ArrayList<>();
-        boolean open = false;
-        StringBuilder temp = new StringBuilder("");
-        for(char item : str.toCharArray()){
-            if (item == '\'' || item == '\"'){
-                if (open){
-                    open = false;
-                    list.add(temp.toString());
-                    temp = new StringBuilder("");
-                    continue;
-                }
-                else {
-                    open = true;
-                    continue;
-                }
 
-            }
-            if((int)item == (int)' ' && !open){
-                if(temp.length() > 0)
-                    list.add(temp.toString());
-                temp = new StringBuilder("");
-                continue;
-            }
-            temp.append(item);
-        }
-        if(temp.length() > 0)list.add(temp.toString());
-        return list;
-    }
 
-//--------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
     public static void getFile(Update update, TelegramLongPollingBot bot) throws TelegramApiException {
         try {
             GetFile getFile = new GetFile();
@@ -183,7 +160,7 @@ public class Function {
 
         }
         catch (Exception ex){ex.printStackTrace();
-                Function.SendTextMessage(update,ex.getMessage());
+            Function.SendTextMessage(update,ex.getMessage());
         }
     }
 
@@ -210,10 +187,10 @@ public class Function {
 
     public static void DeleteFile(Update update) throws TelegramApiException {
         if(new File(update.getMessage().getText().split(":")[1]).exists())
-        if(new File(update.getMessage().getText().split(":")[1]).delete())
-            Function.SendTextMessage(update, StaticString.BotStatic.Messages.Done);
-        else
-            Function.SendTextMessage(update, StaticString.BotStatic.Messages.Error);
+            if(new File(update.getMessage().getText().split(":")[1]).delete())
+                Function.SendTextMessage(update, StaticString.BotStatic.Messages.Done);
+            else
+                Function.SendTextMessage(update, StaticString.BotStatic.Messages.Error);
         else Function.SendTextMessage(update,StaticString.BotStatic.Messages.File_not_exists);
     }
 
@@ -242,9 +219,11 @@ public class Function {
 
     public static void Dir(Update update) throws TelegramApiException {
         System.out.println("_"+update.getMessage().getText()+"_");
-        if(new File(update.getMessage().getText().split(":")[1]).exists()){
+        String command = update.getMessage().getText();
+        command = command.substring(4,command.length());
+        if(new File(command).exists()){
             StringBuilder str = new StringBuilder("");
-            for(String item : new File(update.getMessage().getText().split(":")[1]).list()){
+            for(String item : new File(command).list()){
                 str.append(item+"\n");
                 System.out.println(str.toString());
                 if(str.length() > StaticString.BotStatic.maximum_characters-1){
