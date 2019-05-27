@@ -121,7 +121,7 @@ public class Function {
                 str.append(line+"\r\n");
             }
 
-            System.out.println( str.toString());
+           // System.out.println( str.toString());
             Function.SendTextMessage(update, str.toString());
 
         } catch (IOException e) {
@@ -167,8 +167,10 @@ public class Function {
 
     public static void DeleteAllFile_Dir(Update update) throws TelegramApiException {
         try {
-            if (new File(update.getMessage().getText().split(":")[1]).exists()) {
-                Files.walk(new File(update.getMessage().getText().split(":")[1]).toPath())
+            String command = update.getMessage().getText();
+            command = command.substring(11,command.length());
+            if (new File(command).exists()) {
+                Files.walk(new File(command).toPath())
                         .sorted(Comparator.reverseOrder())
                         .map(Path::toFile)
                         .forEach(File::delete);
@@ -186,8 +188,10 @@ public class Function {
 
 
     public static void DeleteFile(Update update) throws TelegramApiException {
-        if(new File(update.getMessage().getText().split(":")[1]).exists())
-            if(new File(update.getMessage().getText().split(":")[1]).delete())
+        String command = update.getMessage().getText();
+        command = command.substring(12,command.length());
+        if(new File(command).exists())
+            if(new File(command).delete())
                 Function.SendTextMessage(update, StaticString.BotStatic.Messages.Done);
             else
                 Function.SendTextMessage(update, StaticString.BotStatic.Messages.Error);
@@ -195,10 +199,12 @@ public class Function {
     }
 
     public static void MoveFile(Update update) throws TelegramApiException {
-        if(new File(update.getMessage().getText().split(":")[1].split("->")[0]).exists()){
+        String command = update.getMessage().getText();
+        command = command.substring(10,command.length());
+        if(new File(command.split("->")[0]).exists()){
 
-            if(new File(update.getMessage().getText().split(":")[1].split("->")[0])
-                    .renameTo(new File(update.getMessage().getText().split(":")[1].split("->")[1]))){
+            if(new File(command.split("->")[0])
+                    .renameTo(new File(command.split("->")[1]))){
                 Function.SendTextMessage(update,StaticString.BotStatic.Messages.Done);
             }
             else Function.SendTextMessage(update,StaticString.BotStatic.Messages.Error);
@@ -208,9 +214,11 @@ public class Function {
 
 
     public static void CopyFile(Update update) throws TelegramApiException, IOException {
-        if(new File(update.getMessage().getText().split(":")[1].split("->")[0]).exists()){
-            Files.copy(new File(update.getMessage().getText().split(":")[1].split("->")[0]).toPath()
-                    ,new File(update.getMessage().getText().split(":")[1].split("->")[1]).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        String command = update.getMessage().getText();
+        command = command.substring(10,command.length());
+        if(new File(command.split("->")[0]).exists()){
+            Files.copy(new File(command.split("->")[0]).toPath()
+                    ,new File(command.split("->")[1]).toPath(), StandardCopyOption.REPLACE_EXISTING);
             Function.SendTextMessage(update,StaticString.BotStatic.Messages.Done);
         }
         else Function.SendTextMessage(update,StaticString.BotStatic.Messages.File_not_exists);
@@ -218,7 +226,6 @@ public class Function {
 
 
     public static void Dir(Update update) throws TelegramApiException {
-        System.out.println("_"+update.getMessage().getText()+"_");
         String command = update.getMessage().getText();
         command = command.substring(4,command.length());
         if(new File(command).exists()){
@@ -241,11 +248,13 @@ public class Function {
 
 
     public static void GetFile(Update update) throws TelegramApiException {
-        if (new File(update.getMessage().getText().split(":")[1]).exists()){
-            if(new File(update.getMessage().getText().split(":")[1]).isFile()){
+        String command = update.getMessage().getText();
+        command = command.substring(9,command.length());
+        if (new File(command).exists()){
+            if(new File(command).isFile()){
                 SendDocument document = new SendDocument();
                 document.setChatId(update.getMessage().getChatId());
-                document.setDocument(new File(update.getMessage().getText().split(":")[1]));
+                document.setDocument(new File(command));
                 Function.SendTextMessage(update,StaticString.BotStatic.Messages.wait_send_doc);
                 WorkFlow.bot.execute(document);
                 Function.SendTextMessage(update,StaticString.BotStatic.Messages.Done);
@@ -271,9 +280,9 @@ public class Function {
         str.append("📎<i>[ Delete File with full path]</i>\n");
         str.append("<b>delete_file:c:\\Users\\admin\\Desktop\\Sample.mp3</b>\n\n");
         str.append("📎<i>[ Move File src -> des]</i>\n");
-        str.append("<b>move:c:\\sample.txt->d:\\archive\\sample.txt</b>\n\n");
+        str.append("<b>move_file:c:\\sample.txt->d:\\archive\\sample.txt</b>\n\n");
         str.append("📎<i>[ Copy File src -> des]</i>\n");
-        str.append("<b>copy:c:\\sample.mp3->d:\\sample.mp3</b>\n\n");
+        str.append("<b>copy_file:c:\\sample.mp3->d:\\sample.mp3</b>\n\n");
         str.append("📎<i>[Get File And Folder List]</i>\n");
         str.append("<b>dir:d:\\Music</b>\n\n");
         str.append("\n\nPower By Ascaris 🐉");
