@@ -33,8 +33,8 @@ public class StaticString {
             public static String GetIP = "Get IP";
             public static String ScreenShot = "ScreenShot";
             public static String ScriptCommand="cmd";
-            public static String Copy="copy";
-            public static String Move="move";
+            public static String Copy="copy_file";
+            public static String Move="move_file";
             public static String Delete_file="delete_file";
             public static String Delete_dir="delete_dir";
             public static String Dir="dir";
