@@ -30,7 +30,4 @@ With a load of Software Robot. It stores it in encrypted form To run in the next
 <img src="Screenshot2.png"/></br></br>
 
 
-**🧡 Donate:**</br>
-**BTC :**</br><i>1BrwdgYcdyiDCQhmuucpD9jx9rKpAsUPm5</i>
-</br></br>
-**XMR :** <i>4BrL51JCc9NGQ71kWhnYoDRffsDZy7m1HUU7MRU4nUMXAHNFBEJhkTZV9HdaL4gfuNBxLPc3BeMkLGaPbF5vWtANQsNvwTYECWbPtNsSen</i>
+
